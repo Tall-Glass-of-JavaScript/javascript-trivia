@@ -5,3 +5,5 @@ JavaScript trivia game created with Knockout.js
 Joanna Brumfield 
 
 Becca Buechle
+
+Darius Dinkins
