@@ -1,5 +1,5 @@
 # JavaScript-Trivia
-JavaScript trivia game using Knockout.js 
+JavaScript trivia game created with Knockout.js 
 
 # Contributors 
 Joanna Brumfield 
