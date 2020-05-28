@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Becca Buechle, Darius Dinkins, Joanna Brumfield, Jason Cords">
   <meta description="JavaScript trivia game using Knockout.js">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles/style.css">
+  <script type='text/javascript' src='scripts/knockout-3.5.1.js'></script>
   <title>Group Trivia Game</title>
 </head>
-<body>
-    <h1>Test</h1>
+
+<body class="bg-light">
+  <!-- Nav -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    <a class="navbar-brand text-light font-weight-light pl-3" href="#">
+      <!-- <img src="images/JSCoffee.png" alt="Logo" width="100%" height="100%"> -->
+      JavaScript Trivia
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="container">
+    <div class="justify-content-center main-container">
+      <!-- Side bar -->
+      <aside class="left bg-white">
+        <div class="top">
+          <h5>Question</h5>
+          <h5>1/10</h5>
+        </div>
+        <div class="bottom">
+          <p class="small font-weight-light">Reset Quiz</p>
+          <a href="#"><img src="images/refresh.png" alt="Refresh Icon" width="30px"></a>
+        </div>
+      </aside>
+      <!-- Main quiz area -->
+      <section class="right bg-white">
+        <h4 class="text-center">Question: 1</h4>
+        <p class="my-3 text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor sit amet consectetur. Lorem ipsum dolor Nobis.</p>
+        <button class="btn btn-outline-dark ans-btns mt-3">Lorem ipsum dolor sit amet </button>
+        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor Nobis.</button>
+        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor sit amet consectetur</button>
+        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor adipisicing elit. Nobis.</button>
+        <button class="btn btn-outline-dark btn-move">Back</button>
+        <button class="btn btn-outline-dark float-right btn-move">Next</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="text/javascript" src="scripts/app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
 </body>
+
 </html>
