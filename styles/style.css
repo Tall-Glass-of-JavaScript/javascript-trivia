@@ -79,3 +79,8 @@ p {
     text-align: center;
   }
 }
+@media (max-width:600px) {
+  .right {
+    padding: 1.5rem;
+  }
+}
