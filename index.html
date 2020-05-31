@@ -31,15 +31,15 @@
   <!-- Main content -->
   <main class="container">
     <!--Knockout Test to make sure it is working-->
-    <h4 class="text-center">The name is: <span data-bind="text: personName"></span></h4>
-    <h4 class="text-center">The age is: <span data-bind="text: personAge"></span></h4>
+    <!--<h4 class="text-center">The name is: <span data-bind="text: personName"></span></h4>
+    <h4 class="text-center">The age is: <span data-bind="text: personAge"></span></h4> -->
 
     <div class="justify-content-center main-container">
       <!-- Side bar -->
       <aside class="left bg-white">
         <div class="top">
           <h5 class="font-weight-light">Question</h5>
-          <h5>1/10</h5>
+          <h5><span data-bind="html: currentQuestion().number"></span>/10</h5>
         </div>
         <div class="bottom">
           <p class="small font-weight-light">Reset Quiz</p>
@@ -48,15 +48,14 @@
       </aside>
       <!-- Main quiz area -->
       <section class="right bg-white">
-        <h4 class="text-center">Question: 1</h4>
-        <p class="my-3 text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor sit amet
-          consectetur. Lorem ipsum dolor Nobis.</p>
-        <button class="btn btn-outline-dark ans-btns mt-3">Lorem ipsum dolor sit amet </button>
-        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor Nobis.</button>
-        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor sit amet consectetur</button>
-        <button class="btn btn-outline-dark ans-btns">Lorem ipsum dolor adipisicing elit. Nobis.</button>
-        <button class="btn btn-outline-dark btn-move">Back</button>
-        <button class="btn btn-outline-dark float-right btn-move">Next</button>
+        <h4 class="text-center">Question: <span data-bind="html: currentQuestion().number"></span></h4>
+        <p class="my-3 text-center" data-bind="html: currentQuestion().question"></p>
+        <div data-bind="foreach: currentQuestion().answers"> 
+        <button class="btn btn-outline-dark ans-btns mt-3">   
+          <div data-bind="html: answer"></div></button>
+        </div>
+        <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0">Back</button>
+        <button class="btn btn-outline-dark float-right btn-move" data-bind="click: next, enable: index() < questions.length -1">Next</button>
       </section>
     </div>
   </main>
@@ -75,9 +74,6 @@
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
-  <script>
-    ko.applyBindings(myViewModel);
   </script>
 
 </body>
