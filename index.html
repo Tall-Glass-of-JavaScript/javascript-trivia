@@ -13,10 +13,10 @@
   <title>Group Trivia Game</title>
 </head>
 
-<body class="bg-light">
+<body class=>
   <!-- Nav -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-    <a class="navbar-brand text-light font-weight-light pl-3" href="#">
+  <nav class="navbar navbar-expand-lg  mb-5">
+    <a class="navbar-brand pl-3" href="#">
       <!-- <img src="images/JSCoffee.png" alt="Logo" width="100%" height="100%"> -->
       JavaScript Trivia
     </a>
@@ -36,7 +36,7 @@
 
     <div class="justify-content-center main-container">
       <!-- Side bar -->
-      <aside class="left bg-white">
+      <aside class="left">
         <div class="top">
           <h5 class="font-weight-light">Question</h5>
           <h5><span data-bind="html: currentQuestion().number"></span>/10</h5>
@@ -47,7 +47,7 @@
         </div>
       </aside>
       <!-- Main quiz area -->
-      <section class="right bg-white">
+      <section class="right">
         <h4 class="text-center">Question: <span data-bind="html: currentQuestion().number"></span></h4>
         <p class="my-3 text-center" data-bind="html: currentQuestion().question"></p>
         <div data-bind="foreach: currentQuestion().answers"> 
