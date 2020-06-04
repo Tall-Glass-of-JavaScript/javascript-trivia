@@ -11,7 +11,7 @@ p {
 }
 
 .navbar {
-background-color: #363732;
+background-color: rgb(33, 33, 33);
 }
 
 .navbar-brand {
@@ -39,9 +39,8 @@ background-color: #363732;
   width: 18%;
   padding: 4rem 0;
   text-align: center;
-  border: 1px solid #000;
   color: whitesmoke;
-  background-color: #363732;
+  background-color:rgb(33, 33, 33);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -49,7 +48,6 @@ background-color: #363732;
 .right {
   width: 75%;
   padding: 4rem 3rem 2rem 3rem;
-  border: 1px solid #000;
   border-left-width: 0;
   background-color: #363732;
   color: whitesmoke;
@@ -83,7 +81,9 @@ background-color: #363732;
   border-style: ;
   
 }
-
+.btn-outline-dark:disabled {
+  color: grey;
+}
 /* Media queries  */
 @media (max-width:992px) {
 
