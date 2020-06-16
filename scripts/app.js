@@ -1,61 +1,193 @@
-/*
-console.log("testing");
-
-var myViewModel = {
-  personName: 'June',
-  personAge: 123
-};
-*/
-var viewModel = function() {
+var viewModel = function () {
   var self = this;
   self.index = ko.observable(0);
-  self.questions = [
-    //array of questions setup as question, [answers], question number, correct answer
-      new questionViewModel("What is JavaScript?", ["A.	JavaScript is a programming/scripting language that allows the user to manipulate the web", "B.	JavaScript is a coffee project for teaching a foreign language", "C.	JavaScript is a new technological achievement that is being researched by NASA", "D.	JavaScript is a form of music practiced by the ancients of history"], 1, "Answer 4"),
-      new questionViewModel("What are functions?", ["A.	A block of JavaScript code that is defined once but may be executed, or invoked, any number of times.", "B.	A block of JavaScript code that is mentioned in passing via secret meetings", "C.	A block of JavaScript code that is used to create disruptions in the system", "D.	A block of JavaScript code that is known as “the coffee break”"], 2, "Answer 6"),
-      new questionViewModel("True or False: Arrays are list-like objects whose prototype has methods to perform traversal and mutation operations?", ["A.	True", "B.	False", "C. Both", "D. Neither"], 3, "Answer 9"),
-      new questionViewModel("Select an example of an array", ["A. function array(design) \n \n { return design*design; }", "B.	var array = 1", "C.	var array = ‘array’", "D.	var array = [1, 2, 3]"], 4, "Answer 15"),
-      new questionViewModel("A variable can be made up of…", ["Strings and headsets", "B.	Numbers and keys", "C.	Strings and Numbers", "D.	Keys and Headsets"], 5, "Answer 19"),
-      new questionViewModel("True or False: JavaScript code can be implemented into html using the 'script' tag.", ["A.	True", "B.	False", "C. Both", "D. Neither"], 6, "Answer 24"),
-      new questionViewModel("Which of the following is an object?", ["A.	var controller = “steel”", "B.	var controller = {material: “steel”}", "C.	var controller = 5", "D.	function controller(steel, rubber) {return steel + rubber}"], 7, "Answer 26"),
-      new questionViewModel("8.	What is a comment in relation to JavaScript?", ["A.	Text that isn’t part of the code but can be used to explain sections of the program", "B.	Text that isn’t part of the code but can be used to improve readability", "C.	Text that isn’t part of the code but can be used to test alternative code", "D.	All of the above"], 8, "Answer 31"),
-      new questionViewModel("9.	Select an example of comment syntax in relation to a JavaScript program ONLY", ["A.	'< ! - - Insert Comment Here - - >'", "B.	// Insert Comment Here", "C.	/* Insert Comment Here ! - - >", "D.	* Insert Comment Here *"], 9, "Answer 33"),
-      new questionViewModel("True or False: Any collection of strings can be used as a variable name", ["A.	True", "B.	False", "C. Both", "D. Neither"], 10, "Answer 38")
-      ];
-      //next and previous buttons to iterate through the array of questions
-  self.currentQuestion = ko.observable(self.questions[0]);
-      self.next = function() {
-          self.index(self.index() + 1);
-          self.currentQuestion(self.questions[self.index()]);
-      }
-      self.prev = function() {
-          self.index(self.index() - 1);
-          self.currentQuestion(self.questions[self.index()]);
-      }
+  self.questions = ko.observableArray([{
+      qNumber: 1,
+      question: 'What is JavaScript?',
+      answers: [
+        'JavaScript is a programming/scripting language that allows the user to manipulate web',
+        'JavaScript is a coffee project for teaching a foreign language',
+        'JavaScript is a new technological achievement that is being researched by NASA',
+        'JavaScript is a form of music practiced by the ancients of history.'
+      ],
+      correctAnswer: 'JavaScript is a programming/scripting language that allows the user to manipulate web',
+    },
+    {
+      qNumber: 2,
+      question: 'What are functions?',
+      answers: [
+        'A block of JavaScript code that is defined once but may be executed, or invoked, any number of times.',
+        'A block of JavaScript code that is mentioned in passing via secret meetings',
+        'A block of JavaScript code that is used to create disruptions in the system',
+        'A block of JavaScript code that is known as “the coffee break”'
+      ],
+      correctAnswer: 'A block of JavaScript code that is defined once but may be executed, or invoked, any number of times.'
+    },
+    {
+      qNumber: 3,
+      question: 'True or False: Arrays are list-like objects whose prototype has methods to perform traversal and mutation operations?',
+      answers: [
+        'True',
+        'False'
+      ],
+      correctAnswer: 'True'
+    },
+    {
+      qNumber: 4,
+      question: 'Select an example of an array',
+      answers: [
+        'function array(design) { return design*design};',
+        'var array = 1;',
+        'var array = ‘array’;',
+        'var array = [1, 2, 3];'
+      ],
+      correctAnswer: 'var array = [1, 2, 3];'
+    },
+    {
+      qNumber: 5,
+      question: 'A variable can be made up of…',
+      answers: [
+        'Strings and headsets',
+        'Numbers and keys',
+        'Strings and Numbers',
+        'Keys and Headsets'
+      ],
+      correctAnswer: 'Strings and Numbers'
+    },
+    {
+      qNumber: 6,
+      question: 'True or False: JavaScript code can be implemented into html using the <script> tag',
+      answers: [
+        'True',
+        'False'
+      ],
+      correctAnswer: 'True'
+    },
+    {
+      qNumber: 7,
+      question: 'Which of the following is an object?',
+      answers: [
+        'var controller = “steel”',
+        'var controller = {material: “steel”}',
+        'var controller = 5',
+        'function controller(steel, rubber) {return steel + rubber};'
+      ],
+      correctAnswer: 'function controller(steel, rubber) {return steel + rubber};'
+    },
+    {
+      qNumber: 8,
+      question: 'What is a comment in relation to JavaScript?',
+      answers: [
+        'Text that isn’t part of the code but can be used to explain sections of the program',
+        'Text that isn’t part of the code but can be used to improve readability',
+        'Text that isn’t part of the code but can be used to test alternative code',
+        'All of the above'
+      ],
+      correctAnswer: 'All of the above'
+    },
+    {
+      qNumber: 9,
+      question: ' True or False: Any collection of strings can be used as a variable name',
+      answers: [
+        'True',
+        'False'
+      ],
+      correctAnswer: 'False'
+    },
+    {
+      qNumber: 10,
+      question: 'Select an example of comment syntax in relation to a JavaScript program ONLY',
+      answers: [
+        '<!- -Insert Comment Here - - > ',
+        '// Insert Comment Here',
+        '/* Insert Comment Here ! - - >',
+        '* Insert Comment Here *'
+      ],
+      correctAnswer: '// Insert Comment Here'
+    },
+  ]);
 
-  return self;
-};
+  self.currentQuestion = ko.observable(self.questions()[0]);
+  self.userAnswers = ko.observableArray();
+  self.score = ko.observable(true);
+  let didAnswer = false;
 
-var answerViewModel = function(answer) {
-  this.answer = answer;
-  this.selected = ko.observable(false);
-  return this;
-};
+  //iterates to next question 
+  self.next = function () {
+    //go to next question if user answered current question
+    if (didAnswer === true) {
+      self.index(self.index() + 1);
+      self.currentQuestion(self.questions()[self.index()]);
+      console.log('You answered the question');
+      didAnswer = false;
+      //if user did not answer question, send alert box asking to confirm moving on 
+    } else {
+      moveOnAlert();
+    };
+  };
 
-var questionViewModel = function(question, answers, number, correct) {
-  var self = this;
-  self.question = question;
-  self.answers = [];
-  self.number = number;
-  self.correct = correct; 
-  for (var n = 0; n < answers.length; n++) {
-      self.answers.push(new answerViewModel(answers[n]));
-  }
-  self.select = function(answer) {
-      self.answers.forEach(function(a) { a.selected(false); });
-      answer.selected(true);
-  }
-  return self;
+  //Go to previous question
+  self.prev = function () {
+    self.index(self.index() - 1);
+    self.currentQuestion(self.questions()[self.index()]);
+  };
+
+  //save selected user answer, fired when answer is clicked in UI
+  self.selected = function (userSelection) {
+    //user selection
+    this.userSelection = userSelection;
+    didAnswer = true;
+    console.log(userSelection);
+
+    //if user selection matches the correct answer push to userAnswers array 
+    if (userSelection === self.currentQuestion().correctAnswer) {
+      self.userAnswers.push(userSelection);
+    }
+    console.log(self.userAnswers().length)
+    console.log(self.userAnswers())
+    // return self.userAnswers();
+  };
+
+  //alert created if user tries to move on without answering a question
+  function moveOnAlert() {
+    if (confirm('You have not answered this question, are you sure you would like to go to the next question?')) {
+      didAnswer = true;
+      // currentQuestion = self.index(self.index() + 1)
+      console.log(self.index());
+    } else {
+      didAnswer = false;
+      console.log(didAnswer);
+    }
+  };
+
+  //finish quiz
+  self.finishQuiz = function () {
+    //calculate score
+    calcScore = self.userAnswers().length / self.questions().length * 100;
+    //grade score
+    if (calcScore >= 80) {
+      self.score(calcScore + '% You are a JavaScript expert');
+      alert(self.score());
+    }
+    if (calcScore >= 60) {
+      self.score(calcScore + '% You are a novice in JavaScript');
+      alert(self.score());
+    } else {
+      self.score(calcScore + '% You are a beginner');
+      alert(self.score());
+    };
+  };
+
+  //resets the quiz, empties answers array and changes index and current question to zero index
+  self.reset = function () {
+    self.currentQuestion(self.questions()[0]);
+    self.index(0);
+    self.userAnswers([]);
+
+    console.log(self.currentQuestion())
+    console.log(self.index());
+    console.log(self.userAnswers())
+  };
 };
 
 ko.applyBindings(new viewModel());

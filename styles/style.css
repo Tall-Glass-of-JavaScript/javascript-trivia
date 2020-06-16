@@ -3,15 +3,19 @@ body {
   margin: 0;
   font-size: 16px;
   background-color: dimgray;
-
 }
 
 p {
   font-size: 1.1rem;
 }
 
+li {
+  margin: 1.5rem 0;
+  list-style-type: none;
+}
+
 .navbar {
-background-color: rgb(33, 33, 33);
+  background-color: rgb(33, 33, 33);
 }
 
 .navbar-brand {
@@ -30,6 +34,9 @@ background-color: rgb(33, 33, 33);
   flex-flow: row wrap;
   margin: 4rem auto;
   width: 72%;
+  /* min-height: 80vh;
+  max-height: 80vh; */
+  min-height: 35rem;
 }
 
 .left {
@@ -40,13 +47,16 @@ background-color: rgb(33, 33, 33);
   padding: 4rem 0;
   text-align: center;
   color: whitesmoke;
-  background-color:rgb(33, 33, 33);
+  background-color: rgb(33, 33, 33);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
 .right {
   width: 75%;
+  display: flex;
+  flex-flow: column;
+  align-content: stretch;
   padding: 4rem 3rem 2rem 3rem;
   border-left-width: 0;
   background-color: #363732;
@@ -58,6 +68,8 @@ background-color: rgb(33, 33, 33);
 .ans-btns {
   width: 100%;
   padding: 1.2rem .5rem;
+  text-align: left;
+  height: 5rem;
   border-radius: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -68,6 +80,7 @@ background-color: rgb(33, 33, 33);
 .btn {
   color: whitesmoke;
   border-color: #EE964B;
+  padding: .8rem 1rem;
   border-radius: 10px;
 }
 
@@ -75,15 +88,19 @@ background-color: rgb(33, 33, 33);
   margin-top: 2rem;
 }
 
-.btn:hover {
- background-color: #363732;
-  border-color: #28AFB0;
-  border-style: ;
-  
-}
 .btn-outline-dark:disabled {
   color: grey;
 }
+
+.btn:hover {
+  border-color: #28AFB0;
+  background-color: #363732;
+}
+
+.ans-btns:focus {
+  border-color: #28AFB0;
+}
+
 /* Media queries  */
 @media (max-width:992px) {
 
@@ -116,6 +133,7 @@ background-color: rgb(33, 33, 33);
     text-align: center;
   }
 }
+
 @media (max-width:600px) {
   .right {
     padding: 1.5rem;
