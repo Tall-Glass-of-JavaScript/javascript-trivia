@@ -1,6 +1,11 @@
 var viewModel = function () {
   var self = this;
   self.index = ko.observable(0);
+  self.userAnswers = ko.observableArray();
+  self.score = ko.observable(true);
+  let didAnswer = false;
+  let selection = []; //placeholder for user selection
+
   self.questions = ko.observableArray([{
       qNumber: 1,
       question: 'What is JavaScript?',
@@ -108,21 +113,22 @@ var viewModel = function () {
   ]);
 
   self.currentQuestion = ko.observable(self.questions()[0]);
-  self.userAnswers = ko.observableArray();
-  self.score = ko.observable(true);
-  let didAnswer = false;
 
-  //iterates to next question 
   self.next = function () {
     //go to next question if user answered current question
     if (didAnswer === true) {
       self.index(self.index() + 1);
       self.currentQuestion(self.questions()[self.index()]);
-      console.log('You answered the question');
       didAnswer = false;
-      //if user did not answer question, send alert box asking to confirm moving on 
+
+      if (self.questions()[self.index() - 1].correctAnswer === selection[selection.length - 1]) {
+        //push last answer from user selection to userAnswers array
+        self.userAnswers.push(selection[selection.length - 1])
+      };
+
+      console.log(self.userAnswers());
     } else {
-      moveOnAlert();
+      alert('Please answer the question before moving on')
     };
   };
 
@@ -130,6 +136,7 @@ var viewModel = function () {
   self.prev = function () {
     self.index(self.index() - 1);
     self.currentQuestion(self.questions()[self.index()]);
+    didAnswer = true;
   };
 
   //save selected user answer, fired when answer is clicked in UI
@@ -137,45 +144,52 @@ var viewModel = function () {
     //user selection
     this.userSelection = userSelection;
     didAnswer = true;
-    console.log(userSelection);
-
-    //if user selection matches the correct answer push to userAnswers array 
-    if (userSelection === self.currentQuestion().correctAnswer) {
-      self.userAnswers.push(userSelection);
-    }
-    console.log(self.userAnswers().length)
-    console.log(self.userAnswers())
-    // return self.userAnswers();
+    selection.push(userSelection);
+    console.log(selection);
   };
 
-  //alert created if user tries to move on without answering a question
-  function moveOnAlert() {
-    if (confirm('You have not answered this question, are you sure you would like to go to the next question?')) {
-      didAnswer = true;
-      // currentQuestion = self.index(self.index() + 1)
-      console.log(self.index());
-    } else {
-      didAnswer = false;
-      console.log(didAnswer);
-    }
-  };
+  //function to see if user input matches correct answers that will be called from next() and finishQuiz()
+  // self.correct = function () {
+  //   let correct;
+  //   let userAnswer = selection[selection.length - 1]
+
+  //   if (self.index() < (self.questions().length) - 1) {
+  //     correct = self.questions()[self.index() - 1].correctAnswer;
+  //   } else {
+  //     correct = self.currentQuestion().correctAnswer;
+  //   };
+  //   if (correct === userAnswer) {
+  //     self.userAnswers.push(userAnswer)
+  //   };
+  // };
 
   //finish quiz
   self.finishQuiz = function () {
+    //grade last question since next is disabled
+    //if correct answer matches user input push answer to userAnswers array
+    if (selection[selection.length - 1] === self.currentQuestion().correctAnswer) {
+      self.userAnswers.push(selection[selection.length - 1])
+    };
+    console.log('last question');
+
     //calculate score
     calcScore = self.userAnswers().length / self.questions().length * 100;
+    if (self.index() === 9) {
+      console.log('test')
+    };
+    console.log(self.userAnswers());
+
     //grade score
     if (calcScore >= 80) {
       self.score(calcScore + '% You are a JavaScript expert');
       alert(self.score());
-    }
-    if (calcScore >= 60) {
-      self.score(calcScore + '% You are a novice in JavaScript');
-      alert(self.score());
-    } else {
+    } else if (calcScore < 60) {
       self.score(calcScore + '% You are a beginner');
       alert(self.score());
-    };
+    } else if (calcScore < 80) {
+      self.score(calcScore + '% You are a novice');
+      alert(self.score());
+    }
   };
 
   //resets the quiz, empties answers array and changes index and current question to zero index
@@ -184,9 +198,9 @@ var viewModel = function () {
     self.index(0);
     self.userAnswers([]);
 
-    console.log(self.currentQuestion())
+    console.log(self.currentQuestion());
     console.log(self.index());
-    console.log(self.userAnswers())
+    console.log(self.userAnswers());
   };
 };
 

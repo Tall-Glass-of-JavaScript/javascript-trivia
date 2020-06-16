@@ -48,32 +48,30 @@
 
         <div class="main-top">
           <h4 class="mb-3 font-weight-light" data-bind="text: currentQuestion().question"></h4>
+          <!-- hidden: function() {$parent.finishQuiz()} -->
         </div>
 
         <div class="main-center" data-bind="">
           <div data-bind="foreach: currentQuestion().answers">
             <!-- , hidden: finishQuiz -->
             <button class="btn btn-outline-dark ans-btns mt-3"
-              data-bind="text: $data, click: $parent.selected"></button>
-
+              data-bind="text: $data, click: $parent.selected.bind($data)">
+            </button>
           </div>
-          <!-- <p data-bind="text: score, visible: finishQuiz"></p> -->
+          <!-- <p data-bind="text: score, visible: function() {$parent.finishQuiz()}"></p> -->
         </div>
 
         <div class="main-bottom">
-          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0">Back</button>
+          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0, visible: index() < questions().length - 1">Back</button>
           <button id="nextBtn" class="btn btn-outline-dark float-right btn-move"
-            data-bind="click: next, visible: index() < questions().length - 1">Next</button>
+            data-bind="click: function(){next()}, visible: index() < questions().length - 1">Next</button>
 
           <button class="btn btn-outline-dark float-right btn-move"
-            data-bind="click: finishQuiz, visible: index() >= questions().length - 1">Submit</button>
+            data-bind="click: function() {finishQuiz()}, visible: index() >= questions().length - 1">Submit</button>
         </div>
       </section>
       </h2>
     </div>
-
-
-
   </main>
 
 
