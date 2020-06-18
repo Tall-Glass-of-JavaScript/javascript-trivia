@@ -120,12 +120,13 @@ var viewModel = function () {
       self.index(self.index() + 1);
       self.currentQuestion(self.questions()[self.index()]);
       didAnswer = false;
+      let userSelected = selection[selection.length - 1];
 
-      if (self.questions()[self.index() - 1].correctAnswer === selection[selection.length - 1]) {
+      //check if users selection matches correct answer and is not a duplicate before pushing to userAnswer array
+      if ((self.questions()[self.index() - 1].correctAnswer === userSelected) && (self.userAnswers.indexOf(userSelected) === -1)) {
         //push last answer from user selection to userAnswers array
-        self.userAnswers.push(selection[selection.length - 1])
+        self.userAnswers.push(userSelected)
       };
-
       console.log(self.userAnswers());
     } else {
       alert('Please answer the question before moving on')
@@ -165,9 +166,10 @@ var viewModel = function () {
 
   //finish quiz
   self.finishQuiz = function () {
+    let userSelected = selection[selection.length - 1];
     //grade last question since next is disabled
-    //if correct answer matches user input push answer to userAnswers array
-    if (selection[selection.length - 1] === self.currentQuestion().correctAnswer) {
+    //check if users selection matches correct answer and is not a duplicate before pushing to userAnswer array
+    if ((userSelected === self.currentQuestion().correctAnswer) && (self.userAnswers.indexOf(userSelected) === -1)) {
       self.userAnswers.push(selection[selection.length - 1])
     };
     console.log('last question');
