@@ -1,10 +1,14 @@
 var viewModel = function () {
   var self = this;
+  self.answered = ko.observable(false);
   self.index = ko.observable(0);
+  self.selection = ko.observableArray();
   self.userAnswers = ko.observableArray();
-  self.score = ko.observable(true);
-  let didAnswer = false;
-  let selection = []; //placeholder for user selection
+  self.score = ko.observable("");
+  let isCurrentSelection = false;
+  //let didAnswer = false;
+  //let selection = []; //placeholder for user selection
+  //let userAnswers = [];
 
   self.questions = ko.observableArray([{
       qNumber: 1,
@@ -116,19 +120,38 @@ var viewModel = function () {
 
   self.next = function () {
     //go to next question if user answered current question
-    if (didAnswer === true) {
-      self.index(self.index() + 1);
-      self.currentQuestion(self.questions()[self.index()]);
-      didAnswer = false;
+    if (self.answered() === true || self.userAnswers()[self.index()]) {
 
-      if (self.questions()[self.index() - 1].correctAnswer === selection[selection.length - 1]) {
-        //push last answer from user selection to userAnswers array
-        self.userAnswers.push(selection[selection.length - 1])
-      };
+      for (let i = 0; i < self.questions()[self.index()].answers.length; i++) {
+        if (self.selection()[self.selection().length - 1] === self.questions()[self.index()].answers[i]) {
+          isCurrentSelection = true;
+          break;
+        }
+      }
+
+      //if (self.questions()[self.index() - 1].correctAnswer === selection[selection.length - 1]) {
+      //push last answer from user selection to userAnswers array
+      if (isCurrentSelection === true) {
+        if (self.userAnswers()[self.index()]) {
+          self.userAnswers.replace(self.userAnswers()[self.index()], self.selection()[self.selection().length - 1]);
+        } else {
+          self.userAnswers().push(self.selection()[self.selection().length - 1]);
+        }
+      }
+
+      isCurrentSelection = false;
+      //};
+
+      if(self.index() < 9) {
+        self.index(self.index() + 1);
+        self.currentQuestion(self.questions()[self.index()]);
+        self.answered(false);
+      }
 
       console.log(self.userAnswers());
+
     } else {
-      alert('Please answer the question before moving on')
+      alert('Please answer the question before moving on');
     };
   };
 
@@ -136,16 +159,27 @@ var viewModel = function () {
   self.prev = function () {
     self.index(self.index() - 1);
     self.currentQuestion(self.questions()[self.index()]);
-    didAnswer = true;
   };
 
   //save selected user answer, fired when answer is clicked in UI
   self.selected = function (userSelection) {
     //user selection
     this.userSelection = userSelection;
-    didAnswer = true;
-    selection.push(userSelection);
-    console.log(selection);
+    self.selection().push(userSelection);
+    self.answered(true);
+    self.index(self.index() + 1);
+    self.index(self.index() - 1);
+    console.log(self.selection());
+  };
+
+  self.buttonClass = function (buttonText) {
+    this.buttonText = buttonText;
+    if (buttonText === self.userAnswers()[self.index()]) {
+      return "ans-sel";
+    } else if (buttonText === self.selection()[self.selection().length - 1]) {
+    console.log("true");
+    return "cur-sel";
+    }
   };
 
   //function to see if user input matches correct answers that will be called from next() and finishQuiz()
@@ -167,13 +201,43 @@ var viewModel = function () {
   self.finishQuiz = function () {
     //grade last question since next is disabled
     //if correct answer matches user input push answer to userAnswers array
-    if (selection[selection.length - 1] === self.currentQuestion().correctAnswer) {
-      self.userAnswers.push(selection[selection.length - 1])
-    };
+    //if (selection[selection.length - 1] === self.currentQuestion().correctAnswer) {
+    //self.userAnswers.push(selection[selection.length - 1])
+    //};
+    /*
+    if (didAnswer === true) {
+
+      for (i = 0; i < self.questions()[self.index()].answers.length; i++) {
+        if (selection[selection.length - 1] === self.questions()[self.index()].answers[i]) {
+          isCurrentSelection = true;
+        }
+      }
+
+      if (isCurrentSelection === true) {
+        answer = self.userAnswers()[self.index()];
+        self.userAnswers().replace(answer, selection[selection.length - 1]);
+      }
+
+      isCurrentSelection = false;
+
+    } else {
+        alert('Please answer the question before moving on');
+    }
+    */
+
+    self.next();
+
     console.log('last question');
 
     //calculate score
-    calcScore = self.userAnswers().length / self.questions().length * 100;
+    //calcScore = self.userAnswers().length / self.questions().length * 100;
+    calcScore = 0;
+    for (i = 0; i < 10; i++) {
+      if(self.questions()[i].correctAnswer === self.userAnswers()[i]) {
+        calcScore += 10;
+      }
+    }
+
     if (self.index() === 9) {
       console.log('test')
     };
@@ -186,7 +250,7 @@ var viewModel = function () {
     } else if (calcScore < 60) {
       self.score(calcScore + '% You are a beginner');
       alert(self.score());
-    } else if (calcScore < 80) {
+    } else {
       self.score(calcScore + '% You are a novice');
       alert(self.score());
     }
@@ -196,6 +260,7 @@ var viewModel = function () {
   self.reset = function () {
     self.currentQuestion(self.questions()[0]);
     self.index(0);
+    self.selection([]);
     self.userAnswers([]);
 
     console.log(self.currentQuestion());

@@ -54,8 +54,7 @@
         <div class="main-center" data-bind="">
           <div data-bind="foreach: currentQuestion().answers">
             <!-- , hidden: finishQuiz -->
-            <button class="btn btn-outline-dark ans-btns mt-3"
-              data-bind="text: $data, click: $parent.selected.bind($data)">
+            <button class="btn ans-btns mt-3" data-bind="text: $data, class: $parent.buttonClass($data), click: $parent.selected.bind($data)">
             </button>
           </div>
           <!-- <p data-bind="text: score, visible: function() {$parent.finishQuiz()}"></p> -->
