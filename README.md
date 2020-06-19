@@ -9,6 +9,3 @@ Becca Buechle
 Darius Dinkins
 
 Jason Cords
-
-
-This is a test 
