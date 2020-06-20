@@ -1,4 +1,6 @@
 var viewModel = function () {
+  
+  //declare variables
   var self = this;
   self.answered = ko.observable(false);
   self.index = ko.observable(0);
@@ -6,10 +8,14 @@ var viewModel = function () {
   self.userAnswers = ko.observableArray();
   self.score = ko.observable("");
   let isCurrentSelection = false;
+<<<<<<< Updated upstream
   //let didAnswer = false;
   //let selection = []; //placeholder for user selection
   //let userAnswers = [];
+=======
+>>>>>>> Stashed changes
 
+  //object array for storing all questions, answers, amd correctAnswers
   self.questions = ko.observableArray([{
       qNumber: 1,
       question: 'What is JavaScript?',
@@ -116,10 +122,15 @@ var viewModel = function () {
     },
   ]);
 
+  //set currentQuestion determined by current page index, invoked by text binding for question title
   self.currentQuestion = ko.observable(self.questions()[0]);
 
   self.next = function () {
+<<<<<<< Updated upstream
     //go to next question if user answered current question
+=======
+    //go to next question if user has answered current question
+>>>>>>> Stashed changes
     if (self.answered() === true || self.userAnswers()[self.index()]) {
 
       for (let i = 0; i < self.questions()[self.index()].answers.length; i++) {
@@ -129,8 +140,12 @@ var viewModel = function () {
         }
       }
 
+<<<<<<< Updated upstream
       //if (self.questions()[self.index() - 1].correctAnswer === selection[selection.length - 1]) {
       //push last answer from user selection to userAnswers array
+=======
+      //push last answer from user selection to userAnswers array if most recent selection is from current page
+>>>>>>> Stashed changes
       if (isCurrentSelection === true) {
         if (self.userAnswers()[self.index()]) {
           self.userAnswers.replace(self.userAnswers()[self.index()], self.selection()[self.selection().length - 1]);
@@ -140,33 +155,47 @@ var viewModel = function () {
       }
 
       isCurrentSelection = false;
+<<<<<<< Updated upstream
       //};
 
+=======
+
+      //dont increment page index or refresh questions if on final page
+>>>>>>> Stashed changes
       if(self.index() < 9) {
         self.index(self.index() + 1);
         self.currentQuestion(self.questions()[self.index()]);
         self.answered(false);
       }
 
+<<<<<<< Updated upstream
       console.log(self.userAnswers());
 
+=======
+      //for debugging
+      console.log(self.userAnswers());
+    
+    //if user didn't answer question, prompt them to do so
+>>>>>>> Stashed changes
     } else {
       alert('Please answer the question before moving on');
     };
   };
 
-  //Go to previous question
+  //go to previous question
   self.prev = function () {
     self.index(self.index() - 1);
     self.currentQuestion(self.questions()[self.index()]);
   };
 
-  //save selected user answer, fired when answer is clicked in UI
+  //save selected user answer, invoked when answer is clicked in UI
   self.selected = function (userSelection) {
-    //user selection
+
+    //save each answer selected by user to selection array and toggle answered boolean to true
     this.userSelection = userSelection;
     self.selection().push(userSelection);
     self.answered(true);
+<<<<<<< Updated upstream
     self.index(self.index() + 1);
     self.index(self.index() - 1);
     console.log(self.selection());
@@ -180,25 +209,31 @@ var viewModel = function () {
     console.log("true");
     return "cur-sel";
     }
+=======
+
+    //toggle observable index to force rechecking of conditionals for class binding
+    self.index(self.index() + 1);
+    self.index(self.index() - 1);
+
+    //for debugging
+    console.log(self.selection());
+>>>>>>> Stashed changes
   };
 
-  //function to see if user input matches correct answers that will be called from next() and finishQuiz()
-  // self.correct = function () {
-  //   let correct;
-  //   let userAnswer = selection[selection.length - 1]
+  //function for assigning a class to previously chosen answers and one to the most recent selection for visual feedback, invoked by class bindings
+  self.buttonClass = function (buttonText) {
+    this.buttonText = buttonText;
+    if (buttonText === self.userAnswers()[self.index()]) {
+      return "ans-sel";
+    } else if (buttonText === self.selection()[self.selection().length - 1]) {
+    console.log("true");
+    return "cur-sel";
+    }
+  };
 
-  //   if (self.index() < (self.questions().length) - 1) {
-  //     correct = self.questions()[self.index() - 1].correctAnswer;
-  //   } else {
-  //     correct = self.currentQuestion().correctAnswer;
-  //   };
-  //   if (correct === userAnswer) {
-  //     self.userAnswers.push(userAnswer)
-  //   };
-  // };
-
-  //finish quiz
+  //finish quiz (invoked when user clicks "Submit")
   self.finishQuiz = function () {
+<<<<<<< Updated upstream
     //grade last question since next is disabled
     //if correct answer matches user input push answer to userAnswers array
     //if (selection[selection.length - 1] === self.currentQuestion().correctAnswer) {
@@ -225,12 +260,20 @@ var viewModel = function () {
     }
     */
 
+=======
+    
+    //invoke next() function to save final answer to userAnswers array before scoring
+>>>>>>> Stashed changes
     self.next();
 
     console.log('last question');
 
+<<<<<<< Updated upstream
     //calculate score
     //calcScore = self.userAnswers().length / self.questions().length * 100;
+=======
+    //calculate score by iterating through userAnswers and checking against correctAnswer
+>>>>>>> Stashed changes
     calcScore = 0;
     for (i = 0; i < 10; i++) {
       if(self.questions()[i].correctAnswer === self.userAnswers()[i]) {
@@ -238,6 +281,10 @@ var viewModel = function () {
       }
     }
 
+<<<<<<< Updated upstream
+=======
+    //for debugging
+>>>>>>> Stashed changes
     if (self.index() === 9) {
       console.log('test')
     };
@@ -256,13 +303,14 @@ var viewModel = function () {
     }
   };
 
-  //resets the quiz, empties answers array and changes index and current question to zero index
+  //resets the quiz, empties userAnswers and selection arrays and changes index and current question to zero index
   self.reset = function () {
     self.currentQuestion(self.questions()[0]);
     self.index(0);
     self.selection([]);
     self.userAnswers([]);
 
+    //for debugging
     console.log(self.currentQuestion());
     console.log(self.index());
     console.log(self.userAnswers());
