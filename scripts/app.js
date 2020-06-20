@@ -1,11 +1,15 @@
 var viewModel = function () {
+  
+  //declare variables
   var self = this;
+  self.answered = ko.observable(false);
   self.index = ko.observable(0);
+  self.selection = ko.observableArray();
   self.userAnswers = ko.observableArray();
-  self.score = ko.observable(true);
-  let didAnswer = false;
-  let selection = []; //placeholder for user selection
+  self.score = ko.observable("");
+  let isCurrentSelection = false;
 
+  //object array for storing all questions, answers, amd correctAnswers
   self.questions = ko.observableArray([{
       qNumber: 1,
       question: 'What is JavaScript?',
@@ -112,70 +116,97 @@ var viewModel = function () {
     },
   ]);
 
+  //set currentQuestion determined by current page index, invoked by text binding for question title
   self.currentQuestion = ko.observable(self.questions()[0]);
 
   self.next = function () {
-    //go to next question if user answered current question
-    if (didAnswer === true) {
-      self.index(self.index() + 1);
-      self.currentQuestion(self.questions()[self.index()]);
-      didAnswer = false;
-      let userSelected = selection[selection.length - 1];
+    //go to next question if user has answered current question
+    if (self.answered() === true || self.userAnswers()[self.index()]) {
 
-      //check if users selection matches correct answer and is not a duplicate before pushing to userAnswer array
-      if ((self.questions()[self.index() - 1].correctAnswer === userSelected) && (self.userAnswers.indexOf(userSelected) === -1)) {
-        //push last answer from user selection to userAnswers array
-        self.userAnswers.push(userSelected)
-      };
+      for (let i = 0; i < self.questions()[self.index()].answers.length; i++) {
+        if (self.selection()[self.selection().length - 1] === self.questions()[self.index()].answers[i]) {
+          isCurrentSelection = true;
+          break;
+        }
+      }
+
+      //push last answer from user selection to userAnswers array if most recent selection is from current page
+      if (isCurrentSelection === true) {
+        if (self.userAnswers()[self.index()]) {
+          self.userAnswers.replace(self.userAnswers()[self.index()], self.selection()[self.selection().length - 1]);
+        } else {
+          self.userAnswers().push(self.selection()[self.selection().length - 1]);
+        }
+      }
+
+      isCurrentSelection = false;
+
+      //dont increment page index or refresh questions if on final page
+      if(self.index() < 9) {
+        self.index(self.index() + 1);
+        self.currentQuestion(self.questions()[self.index()]);
+        self.answered(false);
+      }
+
+      //for debugging
       console.log(self.userAnswers());
+    
+    //if user didn't answer question, prompt them to do so
     } else {
-      alert('Please answer the question before moving on')
+      alert('Please answer the question before moving on');
     };
   };
 
-  //Go to previous question
+  //go to previous question
   self.prev = function () {
     self.index(self.index() - 1);
     self.currentQuestion(self.questions()[self.index()]);
-    didAnswer = true;
   };
 
-  //save selected user answer, fired when answer is clicked in UI
+  //save selected user answer, invoked when answer is clicked in UI
   self.selected = function (userSelection) {
-    //user selection
+
+    //save each answer selected by user to selection array and toggle answered boolean to true
     this.userSelection = userSelection;
-    didAnswer = true;
-    selection.push(userSelection);
-    console.log(selection);
+    self.selection().push(userSelection);
+    self.answered(true);
+
+    //toggle observable index to force rechecking of conditionals for class binding
+    self.index(self.index() + 1);
+    self.index(self.index() - 1);
+
+    //for debugging
+    console.log(self.selection());
   };
 
-  //function to see if user input matches correct answers that will be called from next() and finishQuiz()
-  // self.correct = function () {
-  //   let correct;
-  //   let userAnswer = selection[selection.length - 1]
+  //function for assigning a class to previously chosen answers and one to the most recent selection for visual feedback, invoked by class bindings
+  self.buttonClass = function (buttonText) {
+    this.buttonText = buttonText;
+    if (buttonText === self.userAnswers()[self.index()]) {
+      return "ans-sel";
+    } else if (buttonText === self.selection()[self.selection().length - 1]) {
+    console.log("true");
+    return "cur-sel";
+    }
+  };
 
-  //   if (self.index() < (self.questions().length) - 1) {
-  //     correct = self.questions()[self.index() - 1].correctAnswer;
-  //   } else {
-  //     correct = self.currentQuestion().correctAnswer;
-  //   };
-  //   if (correct === userAnswer) {
-  //     self.userAnswers.push(userAnswer)
-  //   };
-  // };
-
-  //finish quiz
+  //finish quiz (invoked when user clicks "Submit")
   self.finishQuiz = function () {
-    let userSelected = selection[selection.length - 1];
-    //grade last question since next is disabled
-    //check if users selection matches correct answer and is not a duplicate before pushing to userAnswer array
-    if ((userSelected === self.currentQuestion().correctAnswer) && (self.userAnswers.indexOf(userSelected) === -1)) {
-      self.userAnswers.push(selection[selection.length - 1])
-    };
+    
+    //invoke next() function to save final answer to userAnswers array before scoring
+    self.next();
+
     console.log('last question');
 
-    //calculate score
-    calcScore = self.userAnswers().length / self.questions().length * 100;
+    //calculate score by iterating through userAnswers and checking against correctAnswer
+    calcScore = 0;
+    for (i = 0; i < 10; i++) {
+      if(self.questions()[i].correctAnswer === self.userAnswers()[i]) {
+        calcScore += 10;
+      }
+    }
+
+    //for debugging
     if (self.index() === 9) {
       console.log('test')
     };
@@ -188,18 +219,20 @@ var viewModel = function () {
     } else if (calcScore < 60) {
       self.score(calcScore + '% You are a beginner');
       alert(self.score());
-    } else if (calcScore < 80) {
+    } else {
       self.score(calcScore + '% You are a novice');
       alert(self.score());
     }
   };
 
-  //resets the quiz, empties answers array and changes index and current question to zero index
+  //resets the quiz, empties userAnswers and selection arrays and changes index and current question to zero index
   self.reset = function () {
     self.currentQuestion(self.questions()[0]);
     self.index(0);
+    self.selection([]);
     self.userAnswers([]);
 
+    //for debugging
     console.log(self.currentQuestion());
     console.log(self.index());
     console.log(self.userAnswers());

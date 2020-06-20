@@ -78,9 +78,9 @@ li {
 }
 
 .btn {
+  padding: .8rem 1rem;
   color: whitesmoke;
   border-color: #EE964B;
-  padding: .8rem 1rem;
   border-radius: 10px;
 }
 
@@ -92,12 +92,30 @@ li {
   color: grey;
 }
 
-.btn:hover {
-  border-color: #28AFB0;
+.btn:active {
   background-color: #363732;
+  border-color: #EE964B;
 }
 
-.ans-btns:focus {
+.btn:hover {
+  color: whitesmoke;
+  background-color: #363732;
+  border-color: #28AFB0;
+}
+
+.btn:focus {
+  background-color: #28AFB0;
+  border-color: #28AFB0;
+  box-shadow: none;
+}
+
+.ans-sel {
+  background-color: #EE964B;
+  border-color: #EE964B;
+}
+
+.cur-sel {
+  background-color: #28AFB0;
   border-color: #28AFB0;
 }
 

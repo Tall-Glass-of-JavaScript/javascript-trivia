@@ -54,15 +54,14 @@
         <div class="main-center" data-bind="">
           <div data-bind="foreach: currentQuestion().answers">
             <!-- , hidden: finishQuiz -->
-            <button class="btn btn-outline-dark ans-btns mt-3"
-              data-bind="text: $data, click: $parent.selected">
+            <button class="btn ans-btns mt-3" data-bind="text: $data, class: $parent.buttonClass($data), click: $parent.selected.bind($data)">
             </button>
           </div>
           <!-- <p data-bind="text: score, visible: function() {$parent.finishQuiz()}"></p> -->
         </div>
 
         <div class="main-bottom">
-          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0">Back</button>
+          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0, visible: index() < questions().length - 1">Back</button>
           <button id="nextBtn" class="btn btn-outline-dark float-right btn-move"
             data-bind="click: function(){next()}, visible: index() < questions().length - 1">Next</button>
 
