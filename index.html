@@ -33,18 +33,21 @@
     <div class="justify-content-center main-container">
       <!-- Side bar -->
       <aside class="left">
-        <div class="aside-top">
+        <div class="aside-top" data-bind="visible: quiz">
           <h5 class="font-weight-light">Question</h5>
-          <h5><span data-bind="html: currentQuestion().qNumber"></span>/10</h5>
+          <h5 ><span data-bind="html: currentQuestion().qNumber"></span>/10</h5>
         </div>
-
+        <div class="aside-top" data-bind="visible: ans">
+          <h5 class="font-weight-light">Number Correct</h5>
+          <h5 ><span data-bind="html: correct"></span>/10</h5>
+        </div>
         <div class="aside-bottom">
           <p class="small font-weight-light">Reset Quiz</p>
           <a href="#"><img src="images/refresh.png" alt="Refresh Icon" width="30px" data-bind="click: reset"></a>
         </div>
       </aside>
       <!-- Main quiz area -->
-      <section class="right" data-bind="">
+      <section class="right" data-bind="visible: quiz">
 
         <div class="main-top">
           <h4 class="mb-3 font-weight-light" data-bind="text: currentQuestion().question"></h4>
@@ -61,12 +64,21 @@
         </div>
 
         <div class="main-bottom">
+<<<<<<< HEAD
           <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0, visible: index() < questions().length - 0">Back</button>
+=======
+          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0, visible: index() <= questions().length - 1">Back</button>
+>>>>>>> 66d4047e9850fbb63682d17f1994e033052061ea
           <button id="nextBtn" class="btn btn-outline-dark float-right btn-move"
             data-bind="click: function(){next()}, visible: index() < questions().length - 1">Next</button>
 
           <button class="btn btn-outline-dark float-right btn-move"
             data-bind="click: function() {finishQuiz()}, visible: index() >= questions().length - 1">Submit</button>
+        </div>
+      </section>
+      <section class="right" data-bind="visible: ans">
+        <div class="main-top">
+          <h4 class="mb-3 font-weight-light" data-bind="text: score"></h4>
         </div>
       </section>
       </h2>

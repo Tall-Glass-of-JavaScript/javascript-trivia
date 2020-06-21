@@ -7,7 +7,10 @@ var viewModel = function () {
   self.selection = ko.observableArray();
   self.userAnswers = ko.observableArray();
   self.score = ko.observable("");
+  self.correct =ko.observable();
   let isCurrentSelection = false;
+  self.quiz = ko.observable(true);
+  self.ans = ko.observable(false);
 
   //object array for storing all questions, answers, amd correctAnswers
   self.questions = ko.observableArray([{
@@ -192,7 +195,9 @@ var viewModel = function () {
 
   //finish quiz (invoked when user clicks "Submit")
   self.finishQuiz = function () {
-    
+    self.quiz(false);
+    self.ans(true);
+
     //invoke next() function to save final answer to userAnswers array before scoring
     self.next();
 
@@ -205,7 +210,7 @@ var viewModel = function () {
         calcScore += 10;
       }
     }
-
+    self.correct(calcScore / 10);
     //for debugging
     if (self.index() === 9) {
       console.log('test')
@@ -215,14 +220,15 @@ var viewModel = function () {
     //grade score
     if (calcScore >= 80) {
       self.score(calcScore + '% You are a JavaScript expert');
-      alert(self.score());
+     // return(self.score());
     } else if (calcScore < 60) {
       self.score(calcScore + '% You are a beginner');
-      alert(self.score());
+      //return(self.score());
     } else {
       self.score(calcScore + '% You are a novice');
-      alert(self.score());
+      //return(self.score());
     }
+    
   };
 
   //resets the quiz, empties userAnswers and selection arrays and changes index and current question to zero index
@@ -231,7 +237,8 @@ var viewModel = function () {
     self.index(0);
     self.selection([]);
     self.userAnswers([]);
-
+    self.quiz(true);
+    self.ans(false);
     //for debugging
     console.log(self.currentQuestion());
     console.log(self.index());
