@@ -35,13 +35,13 @@
       <aside class="left">
         <div class="aside-top" data-bind="visible: quiz">
           <h5 class="font-weight-light">Question</h5>
-          <h5 ><span data-bind="html: currentQuestion().qNumber"></span>/10</h5>
+          <h5><span data-bind="html: currentQuestion().qNumber"></span>/10</h5>
         </div>
         <div class="aside-top" data-bind="visible: ans">
           <h5 class="font-weight-light">Number Correct</h5>
-          <h5 ><span data-bind="html: correct"></span>/10</h5>
+          <h5><span data-bind="html: correct"></span>/10</h5>
         </div>
-        <div class="aside-bottom">
+        <div class="aside-bottom" data-bind="hidden: ans">
           <p class="small font-weight-light">Reset Quiz</p>
           <a href="#"><img src="images/refresh.png" alt="Refresh Icon" width="30px" data-bind="click: reset"></a>
         </div>
@@ -49,22 +49,17 @@
       <!-- Main quiz area -->
       <section class="right" data-bind="visible: quiz">
 
-        <div class="main-top">
-          <h4 class="mb-3 font-weight-light" data-bind="text: currentQuestion().question"></h4>
-          <!-- hidden: function() {$parent.finishQuiz()} -->
+        <h4 class="mb-3 font-weight-light" data-bind="text: currentQuestion().question"></h4>
+
+        <div data-bind="foreach: currentQuestion().answers">
+          <button class="btn ans-btns mt-3"
+            data-bind="text: $data, class: $parent.buttonClass($data), click: $parent.selected.bind($data)">
+          </button>
         </div>
 
-        <div class="main-center" data-bind="">
-          <div data-bind="foreach: currentQuestion().answers">
-            <!-- , hidden: finishQuiz -->
-            <button class="btn ans-btns mt-3" data-bind="text: $data, class: $parent.buttonClass($data), click: $parent.selected.bind($data)">
-            </button>
-          </div>
-          <!-- <p data-bind="text: score, visible: function() {$parent.finishQuiz()}"></p> -->
-        </div>
-
-        <div class="main-bottom">
-          <button class="btn btn-outline-dark btn-move" data-bind="click: prev, enable: index() > 0, visible: index() < questions().length - 0">Back</button>
+        <div class="bottom">
+          <button class="btn btn-outline-dark btn-move"
+            data-bind="click: prev, enable: index() > 0, visible: index() < questions().length - 0">Back</button>
           <button id="nextBtn" class="btn btn-outline-dark float-right btn-move"
             data-bind="click: function(){next()}, visible: index() < questions().length - 1">Next</button>
 
@@ -72,15 +67,15 @@
             data-bind="click: function() {finishQuiz()}, visible: index() >= questions().length - 1">Submit</button>
         </div>
       </section>
-      <section class="right" data-bind="visible: ans">
-        <div class="main-top">
-          <h4 class="mb-3 font-weight-light" data-bind="text: score"></h4>
-        </div>
+
+      <section class="right text-center" data-bind="visible: ans">
+        <h3 class="mb-3 font-weight-light" data-bind="text: score"></h3>
+        <button class="btn btn-outline-dark mt-5 retakeBtn" data-bind="click: reset">Retake Quiz?</button>
       </section>
+
       </h2>
     </div>
   </main>
-
 
   <!-- Footer -->
   <footer>
@@ -99,12 +94,4 @@
   </script>
 
 </body>
-
 </html>
-
-<!-- <ul data-bind="foreach: currentQuestion().answers">
-  <li>
-    <input type="radio" name="answerGroup" data-bind="attr: {value: answer[i]}, checked: $root.answers" />
-    <span data-bind="text: $data"></span>
-  </li>
-</ul> -->

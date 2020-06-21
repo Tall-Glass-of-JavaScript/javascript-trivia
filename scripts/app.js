@@ -130,8 +130,8 @@ var viewModel = function () {
         if (self.selection()[self.selection().length - 1] === self.questions()[self.index()].answers[i]) {
           isCurrentSelection = true;
           break;
-        }
-      }
+        };
+      };
 
       //push last answer from user selection to userAnswers array if most recent selection is from current page
       if (isCurrentSelection === true) {
@@ -139,7 +139,7 @@ var viewModel = function () {
           self.userAnswers.replace(self.userAnswers()[self.index()], self.selection()[self.selection().length - 1]);
         } else {
           self.userAnswers().push(self.selection()[self.selection().length - 1]);
-        }
+        };
       }
 
       isCurrentSelection = false;
@@ -190,7 +190,7 @@ var viewModel = function () {
     } else if (buttonText === self.selection()[self.selection().length - 1]) {
     console.log("true");
     return "cur-sel";
-    }
+    };
   };
 
   //finish quiz (invoked when user clicks "Submit")
@@ -208,8 +208,8 @@ var viewModel = function () {
     for (i = 0; i < 10; i++) {
       if(self.questions()[i].correctAnswer === self.userAnswers()[i]) {
         calcScore += 10;
-      }
-    }
+      };
+    };
     self.correct(calcScore / 10);
     //for debugging
     if (self.index() === 9) {
@@ -219,16 +219,12 @@ var viewModel = function () {
 
     //grade score
     if (calcScore >= 80) {
-      self.score(calcScore + '% You are a JavaScript expert');
-     // return(self.score());
+      self.score(calcScore + '% You are a JavaScript expert! Keep up the great work!');
     } else if (calcScore < 60) {
-      self.score(calcScore + '% You are a beginner');
-      //return(self.score());
+      self.score(calcScore + '% You are a beginner. Keep studying!');
     } else {
-      self.score(calcScore + '% You are a novice');
-      //return(self.score());
-    }
-    
+      self.score(calcScore + '% You are a novice. You could use a little more practice!');
+    };
   };
 
   //resets the quiz, empties userAnswers and selection arrays and changes index and current question to zero index
@@ -239,10 +235,6 @@ var viewModel = function () {
     self.userAnswers([]);
     self.quiz(true);
     self.ans(false);
-    //for debugging
-    console.log(self.currentQuestion());
-    console.log(self.index());
-    console.log(self.userAnswers());
   };
 };
 

@@ -108,7 +108,14 @@ li {
   box-shadow: none;
 }
 
-
+.retakeBtn {
+  align-self: center;
+  color: whitesmoke;
+  background-color: #363732;
+  border-color: #28AFB0;
+  width: 60%;
+  padding: 1rem;
+}
 .ans-sel {
   background-color: #EE964B;
   border-color: #EE964B;
@@ -131,6 +138,10 @@ li {
     flex-flow: row;
     width: 100%;
     padding: 1rem;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 0px;
   }
 
   .left>.top {
@@ -145,10 +156,9 @@ li {
 
   .right {
     width: 100%;
-  }
-
-  .right>p {
-    text-align: center;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 }
 
