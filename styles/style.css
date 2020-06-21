@@ -102,12 +102,12 @@ li {
   background-color: #363732;
   border-color: #28AFB0;
 }
-
 .btn:focus {
   background-color: #28AFB0;
   border-color: #28AFB0;
   box-shadow: none;
 }
+
 
 .ans-sel {
   background-color: #EE964B;
