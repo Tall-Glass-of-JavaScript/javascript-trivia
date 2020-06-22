@@ -126,6 +126,14 @@ li {
   border-color: #28AFB0;
 }
 
+#image-java {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
+}
+
 /* Media queries  */
 @media (max-width:992px) {
 
