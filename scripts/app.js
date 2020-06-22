@@ -1,5 +1,5 @@
 var viewModel = function () {
-  
+
   //declare variables
   var self = this;
   self.answered = ko.observable(false);
@@ -7,7 +7,7 @@ var viewModel = function () {
   self.selection = ko.observableArray();
   self.userAnswers = ko.observableArray();
   self.score = ko.observable("");
-  self.correct =ko.observable();
+  self.correct = ko.observable();
   let isCurrentSelection = false;
   self.quiz = ko.observable(true);
   self.ans = ko.observable(false);
@@ -145,7 +145,7 @@ var viewModel = function () {
       isCurrentSelection = false;
 
       //dont increment page index or refresh questions if on final page
-      if(self.index() < 9) {
+      if (self.index() < 9) {
         self.index(self.index() + 1);
         self.currentQuestion(self.questions()[self.index()]);
         self.answered(false);
@@ -153,8 +153,8 @@ var viewModel = function () {
 
       //for debugging
       console.log(self.userAnswers());
-    
-    //if user didn't answer question, prompt them to do so
+
+      //if user didn't answer question, prompt them to do so
     } else {
       alert('Please answer the question before moving on');
     };
@@ -188,8 +188,8 @@ var viewModel = function () {
     if (buttonText === self.userAnswers()[self.index()]) {
       return "ans-sel";
     } else if (buttonText === self.selection()[self.selection().length - 1]) {
-    console.log("true");
-    return "cur-sel";
+      console.log("true");
+      return "cur-sel";
     };
   };
 
@@ -206,7 +206,7 @@ var viewModel = function () {
     //calculate score by iterating through userAnswers and checking against correctAnswer
     calcScore = 0;
     for (i = 0; i < 10; i++) {
-      if(self.questions()[i].correctAnswer === self.userAnswers()[i]) {
+      if (self.questions()[i].correctAnswer === self.userAnswers()[i]) {
         calcScore += 10;
       };
     };
@@ -219,11 +219,11 @@ var viewModel = function () {
 
     //grade score
     if (calcScore >= 80) {
-      self.score(calcScore + '% You are a JavaScript expert! Keep up the great work!');
+      self.score('You scored: ' + '<strong>' + calcScore + '%</strong>' + '<br /><h4>You are a JavaScript expert! Keep up the great work!');
     } else if (calcScore < 60) {
-      self.score(calcScore + '% You are a beginner. Keep studying!');
+      self.score('You scored: ' + '<strong>' + calcScore + '%</strong>' + '<br />You are a beginner. Keep studying!');
     } else {
-      self.score(calcScore + '% You are a novice. You could use a little more practice!');
+      self.score('You scored: ' + '<strong>' + calcScore + '%</strong>' + '<br />You are a novice. You could use a little more practice!');
     };
   };
 

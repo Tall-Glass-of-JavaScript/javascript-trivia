@@ -9,23 +9,19 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="styles/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/bc5c290b4f.js" crossorigin="anonymous"></script>
   <script type='text/javascript' src='scripts/knockout-3.5.1.js'></script>
   <title>Group Trivia Game</title>
 </head>
 
 <body class=>
   <!-- Nav -->
-  <nav class="navbar navbar-expand-lg  mb-5">
-    <a class="navbar-brand pl-3" href="#">
-      <!-- <img src="images/JSCoffee.png" alt="Logo" width="100%" height="100%"> -->
+  <nav class="mb-5">
+    <img src="images/JSCoffee.png" alt="Logo" width="100%" height="100%" class="logo">
+    <h2 class="navbar-brand pl-3">
       JavaScript Trivia
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-    </div>
+    </h2>
   </nav>
 
   <!-- Main content -->
@@ -38,7 +34,7 @@
           <h5><span data-bind="html: currentQuestion().qNumber"></span>/10</h5>
         </div>
         <div class="aside-top" data-bind="visible: ans">
-          <h5 class="font-weight-light">Number Correct</h5>
+          <h5 class="font-weight-light">Number<br>Correct</h5>
           <h5><span data-bind="html: correct"></span>/10</h5>
         </div>
         <div class="aside-bottom" data-bind="hidden: ans">
@@ -49,7 +45,7 @@
       <!-- Main quiz area -->
       <section class="right" data-bind="visible: quiz">
 
-        <h4 class="mb-3 font-weight-light" data-bind="text: currentQuestion().question"></h4>
+        <h4 class="mb-3 text-light" data-bind="text: currentQuestion().question"></h4>
 
         <div data-bind="foreach: currentQuestion().answers">
           <button class="btn ans-btns mt-3"
@@ -69,19 +65,39 @@
       </section>
 
       <section class="right text-center" data-bind="visible: ans">
-        <h3 class="mb-3 font-weight-light" data-bind="text: score"></h3>
-        
-       <img src="images/JSCoffee.png" id="image-java" alt="Coffee logo of the team">
-       <h3 class="mb-3 font-weight-light"> Thank you for playing our JavaScript Trivia Game!</h3>
-        <button class="btn btn-outline-dark mt-5 retakeBtn" data-bind="click: reset">Retake Quiz?</button>
+        <h3 class="mb-3 font-weight-light" data-bind="html: score"></h3>
+        <img src="images/JSCoffee.png" id="image-java" alt="Coffee logo of the team" class="my-4 align-self-center"
+          width="100%" height="100%">
+        <p class="mb-3 font-weight-light"> Thank you for playing our JavaScript Trivia Game!</p>
+        <button class="btn btn-outline-dark m-3 retakeBtn" data-bind="click: reset">Retake Quiz?</button>
       </section>
-
-      </h2>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer>
+  <footer class="d-flex justify-content-between">
+    <div class="footer-col">
+      <address>
+        <p>
+          4885 All Over<br>
+          Many States, USA <br>
+          60610
+        </p>
+        <a href="#">tallglassofjavascript@example.com</a>
+      </address>
+    </div>
+
+    <div class="footer-col social text-right">
+      <a href="https://github.com/Tall-Glass-of-JavaScript/javascript-trivia"><i class="fab fa-github-square"></i></a>
+      <a href="https://twitter.com/"><i class="fab fa-twitter-square"></i></a>
+      <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+      <p class="mt-4">&copy Tall Glass of JavaScript</p>
+    </div>
+    <!-- <div class="footer-col d-flex flex-column">
+      <img src="images/JSCoffee.png" alt="Logo" width="100%" height="100%" class="align-self-end">
+    </div> -->
+
+
   </footer>
 
   <!-- Scripts -->
@@ -97,4 +113,5 @@
   </script>
 
 </body>
+
 </html>
